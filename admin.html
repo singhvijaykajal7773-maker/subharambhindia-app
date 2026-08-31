@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SubhArambh Admin Panel</title>
+<link rel="icon" href="./logo.png"><link rel="stylesheet" href="./admin.css">
+</head>
+<body>
+<button id="admin-menu-toggle" class="admin-menu-toggle" aria-label="Open navigation">☰</button><div id="admin-overlay" class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="brand"><img src="./logo.png"><div><b>SubhArambh</b><span>Owner Console</span></div></div>
+    <nav>
+      <button class="nav active" data-section="dashboard">Dashboard</button>
+      <button class="nav" data-section="members">Members</button>
+      <button class="nav" data-section="campaigns">Campaigns</button>
+      <button class="nav" data-section="ai">AI Calling</button>
+      <button class="nav" data-section="users">Users & Roles</button>
+      <button class="nav" data-section="activity">Activity</button>
+    </nav>
+    <a class="back" href="./">← Open Business App</a>
+  </aside>
+  <main class="admin-main">
+    <header><div><h1 id="section-title">Dashboard</h1><p id="section-sub">Business overview and system health</p></div><div class="header-actions"><span class="owner-pill">OWNER</span><button id="logout" class="btn ghost">Logout</button></div></header>
+    <div id="notice" class="notice hidden"></div>
+    <section id="dashboard" class="section active"><div id="stats" class="stats"></div><div class="grid2"><div class="card"><h3>Quick Actions</h3><div class="quick"><button data-go="members">Import / View Members</button><button data-go="campaigns">Create Campaign</button><button data-go="ai">AI Calling Queue (consent required)</button></div></div><div class="card"><h3>Deployment</h3><p class="muted">Demo mode is safe for testing. Real WhatsApp and AI calls require approved providers and credentials.</p><div id="health"></div></div></div></section>
+    <section id="members" class="section"><div class="toolbar"><input id="member-search" placeholder="Search name or phone"><select id="member-status"><option value="all">All Status</option><option value="valid">Valid</option><option value="expired">Expired</option><option value="new">New</option><option value="expiring_soon">Expiring Soon</option><option value="unknown">Unknown</option></select><label class="upload btn">Import Excel<input id="excel" type="file" accept=".xlsx,.xls"></label></div><div class="card table-card"><div id="member-table"></div></div></section>
+    <section id="campaigns" class="section"><div class="card"><h3>Create In-App Campaign</h3><div class="formgrid"><input id="camp-name" placeholder="Campaign name"><select id="camp-group"><option>All</option><option>valid</option><option>expired</option><option>new</option><option value="expiring_soon">expiring_soon</option></select></div><textarea id="camp-message" placeholder="Message. Use {name} for customer name"></textarea><button id="create-camp" class="btn primary">Create Campaign</button></div><div class="card table-card"><h3>Campaign History</h3><div id="campaign-table"></div></div></section>
+    <section id="ai" class="section">
+<div class="card"><h3>AI Call Script</h3>
+<div class="formgrid"><input id="script-name" placeholder="Script name"><select id="script-status"><option value="valid">Valid</option><option value="expired">Expired</option><option value="new">New</option><option value="expiring_soon">Expiring Soon</option><option value="unknown">Unknown</option></select><input id="script-agent-id" placeholder="Agent/Assistant ID (optional)"></div>
+<textarea id="script-text" placeholder="AI calling script / knowledge. Write exactly what the AI should know and say."></textarea>
+<button id="create-script" class="btn primary">Save Script</button><button id="cancel-edit" class="btn ghost" style="display:none">Cancel Edit</button>
+</div>
+<div class="card"><h3>Schedule AI Calling</h3>
+<div class="formgrid schedule-grid">
+<input id="ai-campaign-name" placeholder="Campaign name, e.g. September Masterclass">
+<select id="ai-campaign-script"><option value="">Select saved script</option></select>
+</div>
+<div class="schedule-row">
+<label>Start <input id="ai-start-at" type="datetime-local"></label>
+<label>End <input id="ai-end-at" type="datetime-local"></label>
+<label>Calls at once <input id="ai-concurrency" type="number" min="1" max="10" value="1"></label>
+</div>
+<div class="target-box"><b>Who should receive calls?</b>
+<label><input type="checkbox" class="ai-target" value="valid" checked> Valid</label>
+<label><input type="checkbox" class="ai-target" value="expired"> Expired</label>
+<label><input type="checkbox" class="ai-target" value="new"> New</label>
+<label><input type="checkbox" class="ai-target" value="expiring_soon"> Expiring Soon</label>
+<label><input type="checkbox" class="ai-target" value="unknown"> Unknown</label>
+<p class="muted">Only members with AI Call Permission/consent enabled are included.</p></div>
+<button id="create-ai-campaign" class="btn primary">Schedule AI Calling</button>
+<button id="auto-queue" class="btn ghost">Legacy Auto-Queue by Script Status</button>
+</div>
+<div class="card table-card"><h3>Scheduled AI Campaigns</h3><div id="ai-campaign-table"></div></div>
+<div class="card table-card"><h3>AI Scripts</h3><div id="ai-table"></div></div>
+<div class="card table-card"><h3>Call Jobs</h3><p class="muted" style="margin-top:0;font-size:12px">Scheduled campaigns automatically start calls inside the selected time window when a real AI voice provider is configured.</p><div id="ai-jobs-table"></div></div>
+</section>
+    <section id="users" class="section"><div class="card table-card"><h3>Users & Roles</h3><div id="users-table"></div></div></section>
+    <section id="activity" class="section"><div class="card table-card"><h3>Activity Log</h3><div id="activity-table"></div></div></section>
+  </main>
+</div>
+<script src="./admin.js"></script>
+</body></html>

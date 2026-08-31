@@ -1,0 +1,4 @@
+name,phone,status,expiryDate,contentType,callingType,group,optIn,notes
+Ramesh Kumar,+919876543210,expired,2026-08-01,renewal,renewal-call,Expired,true,Membership expired
+Sita Sharma,+919876543211,valid,2026-12-31,information,follow-up,Valid,true,Active member
+Amit Singh,+919876543212,new,,welcome,welcome-call,New,true,New member

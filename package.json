@@ -1,0 +1,26 @@
+{
+  "name": "subharambh-business-app",
+  "version": "8.0.0",
+  "description": "SubhArambh India all-in-one business communication, CRM, membership and AI calling platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "uuid": "^9.0.1",
+    "xlsx": "^0.18.5",
+    "pg": "^8.16.3",
+    "papaparse": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=18 <27"
+  }
+}

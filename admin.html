@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SubhArambh Admin Panel</title>
+<link rel="icon" href="./logo.png"><link rel="manifest" href="./manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="apple-touch-icon" href="./logo.png"><link rel="stylesheet" href="./admin.css">
+</head>
+<body>
+<button id="admin-menu-toggle" class="admin-menu-toggle" aria-label="Open navigation">☰</button><div id="admin-overlay" class="admin-overlay"></div>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="brand"><img src="./logo.png"><div><b>SubhArambh</b><span>Owner Console</span></div></div>
+    <nav>
+      <button class="nav active" data-section="dashboard">Dashboard</button>
+      <button class="nav" data-section="members">Members</button>
+      <button class="nav" data-section="events">Artists / Topics / Events</button>
+      <button class="nav" data-section="campaigns">Campaigns</button>
+      <button class="nav" data-section="templates">Message Templates</button>
+      <button class="nav" data-section="ai">AI Calling</button>
+      <button class="nav" data-section="ai-messages">AI Messaging</button>
+      <button class="nav" data-section="users">Users & Roles</button>
+      <button class="nav" data-section="activity">Activity</button>
+    </nav>
+    <a class="back" href="./">← Open Business App</a>
+  </aside>
+  <main class="admin-main">
+    <header><div><h1 id="section-title">Dashboard</h1><p id="section-sub">Business overview and system health</p></div><div class="header-actions"><span class="owner-pill">OWNER</span><button id="logout" class="btn ghost">Logout</button></div></header>
+    <div id="notice" class="notice hidden"></div>
+    <section id="dashboard" class="section active"><div id="stats" class="stats"></div><div class="grid2"><div class="card"><h3>Quick Actions</h3><div class="quick"><button data-go="members">Import / View Members</button><button data-go="campaigns">Create Campaign</button><button data-go="ai">AI Calling Queue (consent required)</button></div></div><div class="card"><h3>Deployment</h3><p class="muted">Demo mode is safe for testing. Real WhatsApp and AI calls require approved providers and credentials.</p><div id="health"></div></div></div></section>
+    <section id="members" class="section"><div class="toolbar"><input id="member-search" placeholder="Search name or phone"><select id="member-status"><option value="all">All Status</option><option value="valid">Valid</option><option value="expired">Expired</option><option value="new">New</option><option value="expiring_soon">Expiring Soon</option><option value="unknown">Unknown</option></select><label class="upload btn">Import Excel / CSV<input id="excel" type="file" accept=".xlsx,.xls,.csv"></label><button id="export-excel" class="btn ghost">Export Excel</button></div><div id="member-editor" class="card hidden"></div><div class="card table-card"><div id="member-table"></div></div><div id="member-pager" class="pager"></div></section>
+    <section id="events" class="section"><div class="card"><h3>Create Artist / Topic / Class / Seminar / Workshop</h3><div class="formgrid"><input id="event-name" placeholder="Name"><select id="event-type"><option value="artist_topic">Artist Topic</option><option value="class">Class</option><option value="masterclass">Masterclass</option><option value="seminar">Seminar</option><option value="workshop">Workshop</option></select><input id="event-artist" placeholder="Artist (optional)"><input id="event-topic" placeholder="Topic (optional)"><input id="event-date" type="date"><input id="event-time" placeholder="Time"><input id="event-location" placeholder="Location"><input id="event-zoom" placeholder="Zoom / Meeting link (optional)"><input id="event-media" placeholder="Poster image URL (optional)"><input id="event-media-file" type="file" accept="image/*" aria-label="Upload event poster"></div><textarea id="event-script" placeholder="Script / message knowledge for this event"></textarea><button id="create-event" class="btn primary">Save Event</button></div><div class="card table-card"><h3>Event Library</h3><div id="event-table"></div></div></section>
+    <section id="campaigns" class="section"><div class="card"><h3>Message / WhatsApp Campaign</h3><p class="muted">One campaign can target all, active, expired, expiring-soon or new members. In-App sends inside this app. WhatsApp requires the official Meta Cloud API and an approved template.</p><div class="formgrid"><input id="camp-name" placeholder="Campaign name"><select id="camp-mode"><option value="IN_APP">In-App Message</option><option value="WHATSAPP">WhatsApp Business</option></select><select id="camp-event"><option value="">No linked event</option></select><select id="camp-group"><option value="all">All</option><option value="valid">VALID Members</option><option value="expired">EXPIRED Members</option><option value="expiring_soon">EXPIRING SOON Members</option><option value="new">NEW Members</option></select><input id="camp-category" placeholder="Category (optional)"><input id="camp-city" placeholder="City (optional)"></div><div class="formgrid"><select id="camp-template"><option value="">No template</option></select><input id="camp-scheduled" type="datetime-local" aria-label="Schedule"><input id="camp-media" placeholder="Media URL (optional)"></div><div class="formgrid"><input id="camp-wa-name" placeholder="Approved WhatsApp template name (required for WhatsApp)"><input id="camp-wa-language" placeholder="WhatsApp template language e.g. en_US" value="en_US"><input id="camp-wa-params" placeholder='Template variables JSON, e.g. ["{name}","{expiry_date}","{zoom_link}"]'></div><textarea id="camp-message" placeholder="Message. Variables: {name} {status} {expiry_date} {renewal_time} {artist} {topic} {event} {date} {time} {location} {zoom_link}"></textarea><div class="toolbar-inline"><button id="create-camp" class="btn primary">Create Campaign</button><span id="wa-status" class="badge muted">Checking WhatsApp connection…</span></div></div><div class="card table-card"><h3>Campaign History</h3><div id="campaign-table"></div></div></section>
+    <section id="templates" class="section"><div class="card"><h3>Message Template Library</h3><div class="formgrid"><input id="tpl-name" placeholder="Template name"><input id="tpl-media" placeholder="Media URL (optional)"><input id="tpl-wa-name" placeholder="Approved WhatsApp template name (optional)"><input id="tpl-wa-language" placeholder="WhatsApp language" value="en_US"></div><input id="tpl-wa-params" placeholder='WhatsApp body variables JSON, e.g. ["{name}","{date}","{zoom_link}"]'><textarea id="tpl-body" placeholder="Template text. Variables: {name} {status} {expiry_date} {renewal_time} {artist} {topic} {event} {date} {time} {location} {zoom_link}"></textarea><button id="save-template" class="btn primary">Save Template</button><button id="cancel-template" class="btn ghost" style="display:none">Cancel Edit</button></div><div class="card table-card"><div id="template-table"></div></div></section>
+    <section id="ai-messages" class="section">
+<div class="card"><h3>AI Message Generator</h3><p class="muted">Write the instruction. AI prepares a draft using the selected event/template. Nothing is sent until the Owner approves it.</p>
+<div class="formgrid"><input id="aim-name" placeholder="Draft / campaign name (optional)"><select id="aim-event"><option value="">No linked event</option></select><select id="aim-template"><option value="">No template</option></select><select id="aim-language"><option>Hindi</option><option>English</option><option>Hinglish</option></select></div>
+<div class="formgrid"><select id="aim-status"><option value="all">All users</option><option value="valid">Active</option><option value="expired">Expired</option><option value="expiring_soon">Expiring Soon</option><option value="new">New</option><option value="unknown">Unknown</option></select><input id="aim-category" placeholder="Category (optional)"><input id="aim-city" placeholder="City (optional)"></div>
+<input id="aim-media-file" type="file" accept="image/*" aria-label="Optional AI message image"><div class="formgrid"><select id="aim-send-mode"><option value="IN_APP">In-App</option><option value="WHATSAPP">WhatsApp Business</option></select><input id="aim-wa-name" placeholder="Approved WhatsApp template name"><input id="aim-wa-language" placeholder="WhatsApp language" value="en_US"><input id="aim-wa-params" placeholder='WhatsApp variables JSON, e.g. ["{name}","{expiry_date}"]'></div><textarea id="aim-instruction" placeholder="Example: 20 September Makeup Seminar ke liye expired members ko polite invitation message banao. Sirf diye gaye event facts use karo."></textarea>
+<button id="aim-generate" class="btn primary">Generate AI Draft</button></div>
+<div class="card table-card"><h3>AI Message Drafts</h3><div id="aim-drafts"></div></div>
+</section>
+    <section id="ai" class="section">
+<div class="card"><h3>AI Call Script</h3>
+<div class="formgrid"><input id="script-name" placeholder="Script name"><select id="script-status"><option value="valid">Valid</option><option value="expired">Expired</option><option value="new">New</option><option value="expiring_soon">Expiring Soon</option><option value="unknown">Unknown</option></select><input id="script-agent-id" placeholder="Agent/Assistant ID (optional)"></div>
+<textarea id="script-text" placeholder="AI calling script / knowledge. Write exactly what the AI should know and say."></textarea>
+<button id="create-script" class="btn primary">Save Script</button><button id="cancel-edit" class="btn ghost" style="display:none">Cancel Edit</button>
+</div>
+<div class="card"><h3>Schedule AI Calling</h3>
+<div class="formgrid schedule-grid">
+<input id="ai-campaign-name" placeholder="Campaign name, e.g. September Masterclass">
+<select id="ai-campaign-script"><option value="">Select saved script</option></select>
+</div>
+<div class="schedule-row">
+<label>Start <input id="ai-start-at" type="datetime-local"></label>
+<label>End <input id="ai-end-at" type="datetime-local"></label>
+<label>Calls at once <input id="ai-concurrency" type="number" min="1" max="10" value="1"></label>
+</div>
+<div class="target-box"><b>Who should receive calls?</b>
+<label><input type="checkbox" class="ai-target" value="valid" checked> Valid</label>
+<label><input type="checkbox" class="ai-target" value="expired"> Expired</label>
+<label><input type="checkbox" class="ai-target" value="new"> New</label>
+<label><input type="checkbox" class="ai-target" value="expiring_soon"> Expiring Soon</label>
+<label><input type="checkbox" class="ai-target" value="unknown"> Unknown</label>
+<div id="ai-target-preview" class="target-preview">Select statuses to see Selected / Eligible / Skipped counts.</div>
+<p class="muted">Only members with AI Call Permission/consent enabled are eligible. The campaign always uses the latest member status at campaign start.</p></div>
+<button id="create-ai-campaign" class="btn primary">Schedule AI Calling</button>
+<button id="auto-queue" class="btn ghost">Legacy Auto-Queue by Script Status</button>
+</div>
+<div class="card table-card"><h3>Scheduled AI Campaigns</h3><div id="ai-campaign-table"></div></div>
+<div class="card table-card"><h3>AI Scripts</h3><div id="ai-table"></div></div>
+<div class="card table-card"><h3>Call Jobs</h3><p class="muted" style="margin-top:0;font-size:12px">Scheduled campaigns automatically start calls inside the selected time window when a real AI voice provider is configured.</p><div id="ai-jobs-table"></div></div>
+</section>
+    <section id="users" class="section"><div class="card table-card"><h3>Users & Roles</h3><div id="users-table"></div></div></section>
+    <section id="activity" class="section"><div class="card table-card"><h3>Activity Log</h3><div id="activity-table"></div></div></section>
+  </main>
+</div>
+<script src="./admin.js"></script>
+</body></html>

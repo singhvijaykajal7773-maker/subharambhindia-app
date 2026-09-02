@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SubhArambh India — Business Communication</title>
+<link rel="icon" href="./logo.png" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<meta name="theme-color" content="#111111" />
+<link rel="apple-touch-icon" href="./logo.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="SubhArambh" />
+<link rel="stylesheet" href="./style.css" />
+
+<style id="critical-ui">
+html,body{min-height:100%;}body{background:#f4f7f9;} .auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 10% 10%,rgba(232,85,139,.18),transparent 30%),radial-gradient(circle at 90% 90%,rgba(15,155,142,.18),transparent 35%),#08111f;} .auth-card{width:min(460px,100%);background:#fff;border-radius:24px;padding:32px;box-shadow:0 25px 80px rgba(0,0,0,.25);} .auth-logo{display:block;width:min(220px,62vw);aspect-ratio:1/1;height:auto;object-fit:contain;margin:0 auto 18px;border-radius:50%;} .auth-card h1{text-align:center;margin:0 0 8px;font-size:28px;} .auth-sub{text-align:center;color:#667085;margin:0 0 24px;} .auth-card label{display:block;font-weight:600;margin:10px 0 8px;color:#344054;} .auth-card input{width:100%;padding:13px 14px;border:1px solid #d0d5dd;border-radius:12px;font-size:15px;} .auth-card button{width:100%;margin-top:6px;padding:13px 16px;border:0;border-radius:12px;background:linear-gradient(135deg,#0f9b8e,#e8558b);color:#fff;font-weight:700;} .install-app-btn{width:100%;margin:0 0 10px!important;padding:12px 16px!important;border:1px solid #0f766e!important;border-radius:12px!important;background:#fff!important;color:#0f766e!important;font-weight:700!important;cursor:pointer}.install-help{font-size:12px;line-height:1.45;text-align:center;color:#667085;margin:0 0 12px}.auth-alt{text-align:center;color:#667085;font-size:14px;} .auth-alt a{color:#0f766e;font-weight:600;} .hidden{display:none!important;} .auth-error{background:#fff1f0;color:#b42318;border:1px solid #fecdca;padding:10px 12px;border-radius:10px;}
+
+@media(max-width:900px){html,body{width:100%;max-width:100%;min-height:100%;height:auto;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch}.auth-screen{min-height:100dvh;height:auto;align-items:flex-start;justify-content:center;padding:max(14px,env(safe-area-inset-top)) 12px max(24px,env(safe-area-inset-bottom));box-sizing:border-box;overflow:visible}.auth-card{width:min(460px,100%);max-height:none;overflow:visible;box-sizing:border-box;padding:20px 18px 22px;border-radius:22px;margin:0 auto}.auth-logo{width:104px;height:104px;margin:0 auto 8px}.auth-card h1{font-size:25px;margin:0 0 5px}.auth-sub{font-size:12px;margin:0 0 14px;line-height:1.35}.auth-step label{margin:9px 0 5px;font-size:13px}.auth-card input{box-sizing:border-box;padding:12px 13px;min-height:48px;font-size:15px}.auth-card button{min-height:48px;padding:12px 14px;margin-top:8px;font-size:15px}.profile-step-title{font-size:22px;margin:4px 0}.profile-step-sub{font-size:12px;margin:0 0 10px}}
+@media(max-width:430px){.auth-screen{padding-left:10px;padding-right:10px}.auth-card{padding:16px 16px 20px;border-radius:20px}.auth-logo{width:88px;height:88px;margin-bottom:6px}.auth-card h1{font-size:23px}.auth-sub{font-size:11px;margin-bottom:10px}.profile-step-title{font-size:20px}.profile-step-sub{font-size:11px;line-height:1.35}.auth-card input{min-height:46px;padding:10px 12px}.auth-card button{min-height:46px}}
+</style>
+
+</head>
+<body>
+
+<!-- ================= AUTH SCREEN ================= -->
+<div id="auth-screen" class="auth-screen">
+  <div class="auth-card">
+    <img src="./logo.png" alt="SubhArambhIndia" class="auth-logo" />
+    <h1>SubhArambhIndia</h1>
+    <p class="auth-sub">Secure business messaging • Install the app for quick access</p>
+    <button id="btn-install-app" class="install-app-btn" type="button">⬇ Install / Download App</button>
+    <p id="install-help" class="install-help hidden"></p>
+
+    <!-- Step 1: phone -->
+    <div id="step-phone" class="auth-step">
+      <label>Mobile Number</label>
+      <input id="input-phone" type="tel" placeholder="e.g. 9876543210" />
+      <button id="btn-request-otp" class="btn-primary">Send OTP</button>
+      <p class="auth-alt">or <a href="#" id="link-password-login">login with username &amp; password</a></p>
+    </div>
+
+    <!-- Step 2: OTP -->
+    <div id="step-otp" class="auth-step hidden">
+      <label>Enter OTP</label>
+      <p id="demo-otp-hint" class="demo-hint"></p>
+      <input id="input-otp" type="text" maxlength="6" placeholder="6-digit code" />
+      <button id="btn-verify-otp" class="btn-primary">Verify</button>
+      <p class="auth-alt"><a href="#" id="link-back-phone">‹ back</a></p>
+    </div>
+
+    <!-- Step 3: complete profile (new users) -->
+    <div id="step-profile" class="auth-step hidden">
+      <h2 class="profile-step-title">Create Your Profile</h2>
+      <p class="profile-step-sub">Phone verified successfully. Complete your profile to continue.</p>
+      <label>Your Name</label>
+      <input id="input-name" type="text" placeholder="Display name" />
+      <label>Username</label>
+      <input id="input-username" type="text" placeholder="Choose a username" />
+      <label>Password</label>
+      <input id="input-password" type="password" placeholder="Create a password" />
+      <button id="btn-complete-profile" class="btn-primary">Create Account</button>
+    </div>
+
+    <!-- Alt: password login -->
+    <div id="step-password" class="auth-step hidden">
+      <label>Username or Phone</label>
+      <input id="input-login-username" type="text" placeholder="Username or phone" />
+      <label>Password</label>
+      <input id="input-login-password" type="password" placeholder="Password" />
+      <button id="btn-login-password" class="btn-primary">Login</button>
+      <p class="auth-alt"><a href="#" id="link-back-phone-2">‹ back to OTP login</a></p>
+    </div>
+
+    <p id="auth-error" class="auth-error hidden"></p>
+  </div>
+</div>
+
+<!-- ================= MAIN APP ================= -->
+<div id="app-screen" class="app-screen hidden">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <img src="./logo.png" class="mini-logo" alt="logo" />
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="chats">Chats</button>
+        <button class="tab-btn" data-tab="status">Status</button>
+        <button class="tab-btn" data-tab="contacts">Contacts</button>
+        <button class="tab-btn business-only hidden" data-tab="marketing">Marketing</button>
+        <button class="tab-btn owner-only hidden" data-tab="owner">Owner</button>
+        <button class="tab-btn" data-tab="settings">Settings</button>
+      </div>
+    </div>
+
+    <div id="tab-chats" class="tab-panel active">
+      <div class="panel-actions">
+        <button id="btn-new-group" class="btn-secondary">+ New Group</button>
+      </div>
+      <div id="chat-list" class="list"></div>
+    </div>
+
+    <div id="tab-status" class="tab-panel">
+      <div class="panel-actions">
+        <button id="btn-add-status" class="btn-secondary">+ Add Status</button>
+      </div>
+      <div id="status-list" class="list"></div>
+    </div>
+
+    <div id="tab-contacts" class="tab-panel">
+      <input id="contact-search" type="text" placeholder="Search people..." class="search-input" />
+      <div id="contact-list" class="list"></div>
+    </div>
+
+    <div id="tab-marketing" class="tab-panel">
+      <div class="panel-actions"><button id="btn-add-contact" class="btn-secondary">+ Contact</button> <button id="btn-demo-contacts" class="btn-secondary">Demo Data</button></div>
+      <div class="marketing-mini"><div><b id="m-contacts">0</b><span>Contacts</span></div><div><b id="m-campaigns">0</b><span>Campaigns</span></div><div><b id="m-sent">0</b><span>Sent</span></div><div><b id="m-read">0</b><span>Read</span></div></div>
+      <div class="marketing-actions"><button id="btn-new-campaign" class="btn-primary">Create Marketing Campaign</button></div>
+      <div class="marketing-section"><h4>Recent Campaigns</h4><div id="campaign-list"></div></div>
+      <div class="marketing-section"><h4>Contacts</h4><input id="marketing-contact-search" class="search-input" placeholder="Search customers..."/><div id="marketing-contact-list" class="list"></div></div>
+    </div>
+
+    <div id="tab-settings" class="tab-panel">
+      <div class="settings-profile">
+        <h3 class="profile-heading">My Profile</h3>
+        <div class="profile-avatar-wrap">
+          <div class="avatar-lg" id="my-avatar">?</div>
+          <label class="profile-photo-btn">Change Photo<input id="settings-avatar" type="file" accept="image/*" hidden /></label>
+        </div>
+        <label class="profile-field-label">Name</label>
+        <input id="settings-name" type="text" placeholder="Display name" />
+        <label class="profile-field-label">Username</label>
+        <input id="settings-username" type="text" readonly />
+        <label class="profile-field-label">Mobile</label>
+        <input id="settings-phone" type="text" readonly />
+        <label class="profile-field-label">About</label>
+        <textarea id="settings-about" placeholder="About / bio"></textarea>
+        <button id="btn-save-profile" class="btn-primary">Save Profile</button>
+      </div>
+      <button id="btn-logout" class="btn-danger">Logout</button>
+    </div>
+  </div>
+
+  <div id="chat-window" class="chat-window">
+    <div id="chat-empty" class="chat-empty">
+      <img src="./logo.png" class="empty-logo" alt="logo" />
+      <p>Select a chat to start messaging</p>
+    </div>
+
+    <div id="chat-active" class="chat-active hidden">
+      <div class="chat-header">
+        <button id="btn-mobile-back" class="mobile-back" title="Back to chats" aria-label="Back to chats">‹</button>
+        <div class="chat-header-info">
+          <div class="avatar-sm" id="chat-avatar"></div>
+          <div>
+            <div id="chat-title" class="chat-title"></div>
+            <div id="chat-subtitle" class="chat-subtitle"></div>
+          </div>
+        </div>
+        <div class="chat-call-actions"><button id="btn-voice-call" class="btn-icon" title="Voice call">📞</button><button id="btn-video-call" class="btn-icon" title="Video call">🎥</button><button id="btn-group-info" class="btn-icon hidden" title="Group info">ⓘ</button></div>
+      </div>
+
+      <div id="messages" class="messages"></div>
+
+      <div id="typing-indicator" class="typing-indicator hidden"></div>
+
+      <div class="composer">
+        <div class="attach-wrap"><button id="btn-attach" class="attach-btn" title="Attachments" type="button">📎</button>
+          <div id="attachment-menu" class="attachment-menu hidden">
+            <button type="button" data-attach="document">📄 <span>Document</span></button>
+            <button type="button" data-attach="media">🖼️ <span>Photos & videos</span></button>
+            <button type="button" data-attach="camera">📷 <span>Camera</span></button>
+            <button type="button" data-attach="audio">🎧 <span>Audio</span></button>
+            <button type="button" data-attach="contact">👤 <span>Contact</span></button>
+            <button type="button" data-attach="poll">📊 <span>Poll</span></button>
+            <button type="button" data-attach="event">📅 <span>Event</span></button>
+            <button type="button" data-attach="sticker">😊 <span>New sticker</span></button>
+          </div>
+        </div>
+        <input type="file" id="file-input" hidden /><input type="file" id="media-input" accept="image/*,video/*" hidden />
+        <input type="file" id="camera-input" accept="image/*,video/*" capture="environment" hidden />
+        <input type="file" id="sticker-input" accept="image/*" hidden />
+        <input id="message-input" type="text" placeholder="Type a message" autocomplete="off" />
+        <button id="btn-send" class="btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="owner-window" class="marketing-window hidden">
+    <div class="marketing-top"><div><h2>Owner Control Center</h2><p>Excel import, member classification and AI calling automation</p></div><span class="demo-badge">OWNER</span></div>
+    <div class="marketing-note">This control center prepares and queues compliant AI-call jobs. Real phone calls require a configured, approved voice/telephony provider; the app never bypasses provider limits or consent rules.</div>
+    <div class="marketing-overview"><div class="stat-card"><span>Total</span><strong id="o-total">0</strong></div><div class="stat-card"><span>Expired</span><strong id="o-expired">0</strong></div><div class="stat-card"><span>Valid</span><strong id="o-valid">0</strong></div><div class="stat-card"><span>New</span><strong id="o-new">0</strong></div><div class="stat-card"><span>Queued Calls</span><strong id="o-queued">0</strong></div></div>
+    <div class="marketing-actions">
+      <label class="btn-primary" style="display:inline-block;cursor:pointer">Import Excel / CSV (.xlsx/.xls/.csv)<input id="owner-excel" type="file" accept=".xlsx,.xls,.csv" hidden></label>
+      <button id="owner-refresh" class="btn-secondary">Refresh</button>
+      <button id="owner-add-script" class="btn-secondary">+ AI Call Script</button>
+      <button id="owner-auto-queue" class="btn-secondary">Auto-Queue by Status</button>
+    </div>
+    <div class="marketing-grid">
+      <section class="marketing-card"><h3>Members / Excel Data</h3><input id="owner-search" class="search-input" placeholder="Search name or phone..."/><div id="owner-contact-list" class="list"></div></section>
+      <section class="marketing-card"><h3>AI Calling Scripts</h3><div id="owner-script-list"></div><h3 style="margin-top:18px">Call Queue</h3><div id="owner-job-list"></div></section>
+    </div>
+  </div>
+
+  <div id="marketing-window" class="marketing-window hidden">
+    <div class="marketing-top"><div><h2>Business Marketing</h2><p>CRM, in-app campaigns and customer follow-up</p></div><span class="demo-badge">IN-APP</span></div>
+    <div class="marketing-note">This area sends messages inside the SubhArambh app. Real WhatsApp campaigns are managed from the Admin Campaigns panel and require the official provider connection.</div>
+    <div class="marketing-overview"><div class="stat-card"><span>Contacts</span><strong id="md-contacts">0</strong></div><div class="stat-card"><span>Campaigns</span><strong id="md-campaigns">0</strong></div><div class="stat-card"><span>Sent</span><strong id="md-sent">0</strong></div><div class="stat-card"><span>Delivered</span><strong id="md-delivered">0</strong></div><div class="stat-card"><span>Read</span><strong id="md-read">0</strong></div></div>
+    <div class="marketing-grid"><section class="marketing-card"><h3>Campaigns</h3><div id="campaign-list-main"></div></section><section class="marketing-card"><h3>Customer List</h3><div id="marketing-contact-list-main"></div></section></div><div class="marketing-note" style="margin-top:12px"><b>In-App Business Broadcast:</b> Send campaigns to registered app users in your customer list without an arbitrary 5-message batch limit. Phone/WhatsApp delivery still requires the relevant provider.</div>
+  </div>
+</div>
+
+<!-- ================= MODALS ================= -->
+<div id="call-overlay" class="call-overlay hidden"><div class="call-card"><div class="call-top"><strong id="call-title">Call</strong><button id="call-close" class="btn-icon" aria-label="Close call">✕</button></div><div id="call-incoming" class="call-incoming hidden"><img id="incoming-caller-avatar" class="incoming-avatar" src="/logo.png" alt="Caller"><h2 id="incoming-caller-name">Caller</h2><p>Incoming call</p><div class="incoming-actions"><button id="incoming-accept" class="btn-call-answer">✓ Accept</button><button id="incoming-reject" class="btn-call-reject">✕ Reject</button></div></div><div id="call-active"><div class="call-videos"><video id="remote-video" autoplay playsinline></video><video id="local-video" autoplay playsinline muted></video><div id="audio-call-avatar" class="call-avatar hidden">☎</div></div><div id="call-status" class="call-status">Connecting…</div><div class="call-timer" id="call-timer">00:00</div><div class="call-controls"><button id="call-mute" class="btn-secondary">🎤 Mute</button><button id="call-camera" class="btn-secondary">📷 Camera</button><button id="call-switch-camera" class="btn-secondary">🔄 Switch</button><button id="call-end" class="btn-danger">End Call</button></div></div></div></div>
+
+<div id="modal-overlay" class="modal-overlay hidden">
+  <div id="modal-content" class="modal-content"></div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="./app.js"></script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
+</body>
+</html>
